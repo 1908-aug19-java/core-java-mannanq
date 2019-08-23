@@ -156,8 +156,52 @@ public class EvaluationService {
 	 */
 	public int getScrabbleScore(String string) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		
+		/*
+		 * - turn string into uppercase
+		 * - break the string into a character array
+		 * - make an int score  and set it equal to 0
+		 * - loop through the character array and add score accordingly (by the character 
+		 * that is encountered in the loop)
+		 * - logic for score is switch case statements
+		 * 
+		 */
+		
+		
+		string = string.toUpperCase();
+		
+			char[] brokenArray = string.toCharArray();
+			int score = 0;
+			
+			for(Character letter : brokenArray) {
+				score += getValue(letter);
+			}
+			return score;
+		
 	}
+	int getValue(char letter) {
+		switch(letter) {
+		case 'D':
+		case 'G': return 2;
+		case 'C':
+		case 'B':
+		case 'M':
+		case 'P': return 3;
+		case 'F':
+		case 'H':
+		case 'V':
+		case 'W':
+		case 'Y': return 4;
+		case 'K' : return 5;
+		case 'J' : 
+		case 'X': return 8;
+		case 'Q':
+		case 'Z': return 10;
+		default: return 1;
+			
+		}
+	}
+	
 
 	/**
 	 * 5. Clean up user-entered phone numbers so that they can be sent SMS messages.
