@@ -11,11 +11,25 @@ public class EvaluationService {
 	 * reverses a String. Example: reverse("example"); -> "elpmaxe"
 	 * 
 	 * @param string
-	 * @return
+	 * @return 
 	 */
 	public String reverse(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		
+		/*
+		 * split up the string into an array of each character
+		 * Loop: start from the end, go till the beginning while appending to a resulting
+		 * array (create it in the beginning). Then join the characters in the array 
+		 */
+		
+		char[] chars = string.toCharArray();
+		String reversedString = "";
+		
+		for(int i = chars.length - 1; i >= 0;i--) {
+			reversedString += chars[i];
+		}
+		
+		return reversedString;
 	}
 
 	/**
@@ -28,7 +42,27 @@ public class EvaluationService {
 	 */
 	public String acronym(String phrase) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		
+		/*
+		 * Find where there is a space or a delimiter. 
+		 * Replace all delimiters with a space
+		 * Split into arrays on space after above step
+		 * get first element of each array and combine
+		 */
+		
+		String acronym = "";
+		String[] splitArr = replaceOtherDelimiters(phrase).split(" ");
+		
+		for(String first : splitArr) {
+			acronym += first.substring(0,1).toUpperCase();
+		}
+		return acronym;
+	}
+	
+	public String replaceOtherDelimiters(String phrase) {
+		return phrase.replace("_", " ")
+				.replace(",", "").replace("-", " ");
+				
 	}
 
 	/**
