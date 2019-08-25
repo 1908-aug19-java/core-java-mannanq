@@ -1,8 +1,12 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EvaluationService {
 
@@ -236,6 +240,7 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
+		
 		return null;
 	}
 
@@ -248,9 +253,39 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	public Map<String, Integer> wordCount(String string) {
+	public Map<String, Integer> wordCount(String sentence) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		sentence = removePunc(sentence);
+		List<String> words1 = split(sentence);
+		
+		Map<String, Integer> words2 = new HashMap<>();
+		for(String oneWord : words1) {
+			oneWord = oneWord.toLowerCase();
+			if(oneWord.isEmpty()) {}
+			else if(false == words2.containsKey(oneWord)) {
+				words2.put(oneWord, 1);
+			}else {
+				Integer currC = words2.get(oneWord);
+				currC++;
+				words2.put(oneWord, currC);
+			}
+		}
+		
+		Map<String, Integer> result = new HashMap<>();
+		for(String oneKey : words2.keySet()) {
+			result.put(oneKey, words2.get(oneKey));
+		}
+		return result;
+	}
+	
+	private String removePunc(String sentence) {
+		String s = sentence.replaceAll("[^a-zA-Z0-9\\s]", "");
+		return s;
+	}
+	
+	private List<String> split(String sentence){
+		String[] split = sentence.split("[^a-zA-Z0-9]");
+		return Arrays.asList(split);
 	}
 
 	/**
@@ -288,12 +323,29 @@ public class EvaluationService {
 	 * binary search is a dichotomic divide and conquer search algorithm.
 	 * 
 	 */
-	static class BinarySearch<T> {
+	static class BinarySearch<T extends Comparable<T>> {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
 			// TODO Write an implementation for this method declaration
-			return 0;
+			int start = 0;
+			int end = sortedList.size() - 1;
+			
+			while(start <= end) {
+				int mid = (start + end) / 2;
+				T listItem = sortedList.get(mid);
+				if(listItem.equals(t)) {
+					return mid;
+				}
+				
+				int compare = t.compareTo(listItem);
+				if(compare < 0) {
+					end = mid - 1;
+				}else if(compare > 0) {
+					start = mid + 1;
+				}
+			}
+			return -1;
 		}
 
 		public BinarySearch(List<T> sortedList) {
@@ -330,7 +382,21 @@ public class EvaluationService {
 	 */
 	public String toPigLatin(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		Pattern vowel = Pattern.compile("^(?:[aeiou]|xr|yt)");
+		Pattern consonant = Pattern.compile("^([^aeiou]*qu|[^aeiouy]+|y(?=[aeiou]))");
+		
+		StringBuilder res = new StringBuilder();
+		for(String word:string.split("\\s")) {
+			if(vowel.matcher(word).find()) {
+				res.append(word).append("ay");
+			}else {
+				Matcher mt = consonant.matcher(word);
+				while(mt.find()) {
+					res.append(word.substring(mt.end()) + mt.group()).append("ay").append(" ");
+				}
+			}
+		}
+		return res.toString().trim();
 	}
 
 	/**
