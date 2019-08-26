@@ -718,7 +718,16 @@ public class EvaluationService {
 	 */
 	public boolean isPangram(String string) {
 		// TODO Write an implementation for this method declaration
-		return false;
+		
+//		write a loop that starts at 'a' and ends at 'z'. Check if 
+//		the char in char loop is in the input string.
+		
+		for(char index = 'a'; index <= 'z';index++) {
+			if(string.toLowerCase().indexOf(index) < 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
