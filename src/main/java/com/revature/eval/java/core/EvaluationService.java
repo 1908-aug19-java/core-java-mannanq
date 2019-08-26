@@ -750,9 +750,15 @@ public class EvaluationService {
 	public Temporal getGigasecondDate(Temporal given) {
 		// TODO Write an implementation for this method declaration
 		
-//		if
-		LocalDateTime th = LocalDateTime.from(given);
-		return null;
+//		check to see if given is LocalDateTime or just LocalDate
+//		If it is just LocalDate, then start from the beginning of the day: .startOf() and add 1000000000;
+//		If it is LocalDateTime, then just add 1000000000 to it;
+//		how to check which one are we given???
+		
+//		if Full Date&Time is given:
+		
+		LocalDateTime th = LocalDateTime.from(given).plusSeconds(1000000000);
+		return th;
 		
 		
 	}
