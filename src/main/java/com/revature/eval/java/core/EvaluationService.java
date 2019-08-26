@@ -240,6 +240,7 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
+//		String number;
 		
 		return null;
 	}
@@ -323,6 +324,9 @@ public class EvaluationService {
 	 * binary search is a dichotomic divide and conquer search algorithm.
 	 * 
 	 */
+	
+//	pretty much straight from Java docs and some articles on medium!
+	
 	static class BinarySearch<T extends Comparable<T>> {
 		private List<T> sortedList;
 
@@ -416,7 +420,16 @@ public class EvaluationService {
 	 */
 	public boolean isArmstrongNumber(int input) {
 		// TODO Write an implementation for this method declaration
-		return false;
+		int inputSize = String.valueOf(input).length();
+		int totalN = 0;
+		
+		String number = String.valueOf(input);
+		
+		for(int i = 0; i < number.length(); i++) {
+			int x = (int) Integer.parseInt(String.valueOf(number.charAt(i)));
+			totalN = (int) (totalN + (Math.pow(x, inputSize)));
+		}
+		return input == totalN;
 	}
 
 	/**
