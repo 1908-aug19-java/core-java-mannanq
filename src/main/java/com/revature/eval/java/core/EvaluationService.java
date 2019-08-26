@@ -1,9 +1,15 @@
 package com.revature.eval.java.core;
 
+import java.time.temporal.ChronoUnit;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -720,7 +726,7 @@ public class EvaluationService {
 		// TODO Write an implementation for this method declaration
 		
 //		write a loop that starts at 'a' and ends at 'z'. Check if 
-//		the char in char loop is in the input string.
+//		the character in char loop is in the input string.
 		
 		for(char index = 'a'; index <= 'z';index++) {
 			if(string.toLowerCase().indexOf(index) < 0) {
@@ -738,9 +744,17 @@ public class EvaluationService {
 	 * @param given
 	 * @return
 	 */
+	
+	
+   
 	public Temporal getGigasecondDate(Temporal given) {
 		// TODO Write an implementation for this method declaration
+		
+//		if
+		LocalDateTime th = LocalDateTime.from(given);
 		return null;
+		
+		
 	}
 
 	/**
@@ -799,7 +813,21 @@ public class EvaluationService {
 	 */
 	public boolean isLuhnValid(String string) {
 		// TODO Write an implementation for this method declaration
-		return false;
+		String s = string.replaceAll(" ", "");
+		if (s.length() <= 1) return false;
+
+		int sum = 0;
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(s.length() - 1 - i);
+			if (c < '0' || c > '9') return false;
+
+			int digit = c - '0';
+			if (i % 2 == 1) digit *= 2;
+			if (digit > 9) digit -= 9;
+			sum += digit;
+		}
+
+		return sum % 10 == 0;
 	}
 
 	/**
@@ -831,7 +859,35 @@ public class EvaluationService {
 	 */
 	public int solveWordProblem(String string) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		
+		List list = Arrays.asList(string.replace("What is","plus")
+				.replace("?", "").replace("by ", "").split(" "));
+		
+		Iterator iterator = list.iterator();
+		
+		int result = 0;
+		while(iterator.hasNext()) {
+			
+				result = calculate((String) iterator.next(), result, Integer.valueOf((String) iterator.next()));
+
+			
+		}
+		return result;
+	}
+	
+	int calculate(String action, int x, int y) {
+		   switch (action){
+           case "plus":
+               return x + y;
+           case "minus":
+               return x - y;
+           case "multiplied":
+               return x * y;
+           case "divided":
+               return x / y;
+           default:
+               throw new IllegalArgumentException("");
+       }
 	}
 
 }
