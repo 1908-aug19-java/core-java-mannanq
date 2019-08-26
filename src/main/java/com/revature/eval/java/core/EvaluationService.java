@@ -598,8 +598,48 @@ public class EvaluationService {
 		 */
 		public static String encode(String string) {
 			// TODO Write an implementation for this method declaration
-			return null;
+			
+			String cipher = "";
+			string  = removeUnwantedChars(string.toLowerCase());
+			for(char c : string.toCharArray()) {
+				if(Character.isLetter(c)) {
+					cipher += (char) ('a' + ('z' - c));
+				}else {
+					cipher += c;
+				}
+			}
+		
+			return getSubStrings(cipher).trim();
 		}
+		
+		  private static String removeUnwantedChars(String input)
+		    {
+		        String out = "";
+		        for(char c : input.toCharArray())
+		        {
+		            if(Character.isLetterOrDigit(c))
+		            {
+		                out += c;
+		            }
+		        }
+		        return out;
+		    }
+		  private static String getSubStrings(String input)
+		    {
+		        String out = "";
+		        for(int i = 0; i < input.length(); i += 5)
+		        {
+		            if(i + 5 <= input.length())
+		            {
+		                out += (input.substring(i, i + 5) + " ");
+		            }
+		            else
+		            {
+		                out += (input.substring(i) + " ");
+		            }
+		        }
+		        return out;
+		    }
 
 		/**
 		 * Question 14
@@ -609,7 +649,16 @@ public class EvaluationService {
 		 */
 		public static String decode(String string) {
 			// TODO Write an implementation for this method declaration
-			return null;
+			String regular = "";
+			string = removeUnwantedChars(string.toLowerCase());
+			for(char c : string.toCharArray()) {
+				if(Character.isLetter(c)) {
+					regular += (char) ('z' + ('a' - c));
+				}else {
+					regular += c;
+				}
+			}
+			return regular;
 		}
 	}
 
@@ -637,7 +686,21 @@ public class EvaluationService {
 	 */
 	public boolean isValidIsbn(String string) {
 		// TODO Write an implementation for this method declaration
-		return false;
+		String isbn = string.replaceAll("-", "");
+		int number = 0;
+		if(isbn.length() != 10) {
+			return false;
+		}
+		for(int i = 0; i < 10; i++) {
+			if(isbn.charAt(i) == 'X') {
+				number += 10;
+			}else if(Character.isDigit(isbn.charAt(i))) {
+				number += ((Integer.parseInt("" + isbn.charAt(i))) * (10 - i));
+			}else {
+				return false;
+			}
+		}
+		return number % 11 == 0;
 	}
 
 	/**
