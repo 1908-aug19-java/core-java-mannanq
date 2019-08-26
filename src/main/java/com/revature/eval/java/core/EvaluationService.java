@@ -1,8 +1,10 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -444,7 +446,20 @@ public class EvaluationService {
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		List<Long> list = new ArrayList<Long>();
+		
+		long i = 2;
+		
+		while(i <= l) {
+			if(l % i == 0) {
+				list.add(i);
+				l = l / i;
+			}else {
+				i++;
+			}
+		}
+		
+		return list;
 	}
 
 	/**
@@ -483,7 +498,19 @@ public class EvaluationService {
 
 		public String rotate(String string) {
 			// TODO Write an implementation for this method declaration
-			return null;
+			StringBuilder sb = new StringBuilder();
+	        for (int i = 0; i < string.length(); i++) {
+	            char ch = string.charAt(i);
+	            if (ch >= 'A' && ch <= 'Z') {
+	                sb.append( (char) ('A' + ((ch - 'A') + key) % 26) );
+	            } else if (ch >= 'a' && ch <= 'z') {
+	                sb.append( (char) ('a' + ((ch - 'a') + key) % 26) );
+	            } else {
+	                sb.append(ch);
+	            }
+	        }
+	        
+	        return sb.toString();
 		}
 
 	}
@@ -502,7 +529,39 @@ public class EvaluationService {
 	 */
 	public int calculateNthPrime(int i) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		if(i == 0) {
+			throw new IllegalArgumentException("Invalid");
+		}
+		int counter = 0;
+		int n = 1;
+		
+		do {
+			n++;
+			if(isPrime(n)) {
+				counter++;
+			}
+		}while(counter != i);
+		
+		return n;
+	}
+	
+	boolean isPrime(int num) {
+		boolean isPrime = false;
+		int flag = 1;
+		int m = num / 2;
+		for(int i = 2; i <= m; i++) {
+			if(num % i == 0) {
+				isPrime = false;
+				flag = 0;
+				break;
+			}
+		}
+		
+		if(flag == 1) {
+			isPrime = true;
+		}
+		
+		return isPrime;
 	}
 
 	/**
