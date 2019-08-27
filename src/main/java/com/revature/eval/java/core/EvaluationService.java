@@ -250,8 +250,45 @@ public class EvaluationService {
 		// TODO Write an implementation for this method declaration
 //		String number;
 		
-		return null;
+		
+		
+		return phoneNumber(string);
 	}
+	
+	public String phoneNumber(String string) {
+	    String phoneNumber = string;
+        String moreThan11DigitsExceptionMessage = "more than 11 digits";
+        String illegalCharacterExceptionMessage = "letters not permitted";
+
+        phoneNumber = phoneNumber.replaceAll("[+()-.\\s]", "");
+        
+        if(phoneNumber.length() > 11) {
+        	throw new IllegalArgumentException(moreThan11DigitsExceptionMessage);
+        }
+        
+
+        if (phoneNumber.length() == 11) {           
+                phoneNumber = phoneNumber.substring(1);
+        }
+        
+        if (phoneNumber.matches(".*[A-Za-z]+.*")) {
+            throw new IllegalArgumentException(illegalCharacterExceptionMessage);
+        }
+
+        if (phoneNumber.matches(".*[?!@,'&:]+.*")) {
+            throw new IllegalArgumentException(illegalCharacterExceptionMessage);
+        }
+        
+        return phoneNumber.replaceAll("[^0-9]", "");
+		
+		
+	}
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * 6. Given a phrase, count the occurrences of each word in that phrase.
